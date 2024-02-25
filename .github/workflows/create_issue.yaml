@@ -27,3 +27,4 @@ jobs:
       - name: create issue
         run: |
           gh issue create --title "${{ github.event.inputs.prefix }}: ${{ github.event.inputs.name }}" --body "This is a dynamically created issue."
+          "https://github.com/good4y/github-action/issues/1"
