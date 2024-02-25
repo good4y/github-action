@@ -26,4 +26,4 @@ jobs:
           echo ${{ secrets.PERSONAL_ACCESS_TOKEN }} | gh auth login --with-token
       - name: create issue
         run: |
-          gh issue create --title "I found a bug" --body "Nothing"
+          gh issue create --title "${{ github.event.inputs.prefix }}: ${{ github.event.inputs.name }}" --body "This is a dynamically created issue."
