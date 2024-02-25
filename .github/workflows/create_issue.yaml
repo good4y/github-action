@@ -1,0 +1,29 @@
+name: create-issue
+on:
+  workflow_dispatch:
+    inputs:
+      prefix:
+        description: 'set issue prefix'
+        required: true
+        default: 'feature'
+        type: choice
+        options:
+          - fix
+          - feature
+          - refactor
+      name:
+        description: 'set issue name'
+        required: true
+        default: 'github-actions'
+        type: string
+
+jobs:
+  create-issue-automation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: gh auth login
+        run: |
+          echo ${{ secrets.PERSONAL_ACCESS_TOKEN }} | gh auth login --with-token
+      - name: create issue
+        run: |
+          gh issue create --title "I found a bug" --body "Nothing"
