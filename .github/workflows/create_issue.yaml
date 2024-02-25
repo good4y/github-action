@@ -26,6 +26,29 @@ jobs:
       - name: gh auth login
         run: |
           echo ${{ secrets.PERSONAL_ACCESS_TOKEN }} | gh auth login --with-token
-      - name: create issue
+      - name: create-issue
+        id: create-issue
         run: |
           gh issue create --title "${{ github.event.inputs.prefix }}: ${{ github.event.inputs.name }}" --body "This is a dynamically created issue."
+      - name: slack
+        if: always()
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          payload: |
+            {
+              "attachments": [
+                {
+                  "pretext": "create issue result",
+                  "color": "28a745",
+                  "fields": [
+                    {
+                      "title": "create issue result ${{ steps.create-issue.outcome }}",
+                      "short": true,
+                      "value": "${{ inputs.prefix }}-${{ inputs.name }}"
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
