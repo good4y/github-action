@@ -34,7 +34,7 @@ jobs:
       matrix:
         environment: ["${{ needs.get-keyword.outputs.level }}"]
     steps:
-      - name: slack
+      - name: send slack message
         uses: slackapi/slack-github-action@v1.25.0
         with:
           payload: |
